@@ -15,6 +15,11 @@ body {
  */
 }
 
+.container-table {
+    background-color: white;
+    height: 400px;
+}
+
 .login {
     background-color: rgba(31, 31, 31, 0.9);
     width: 550px;

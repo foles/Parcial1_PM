@@ -12,12 +12,9 @@ $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_
 if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
-$stmt = $con->prepare('SELECT password, ci FROM usuario WHERE id = ?');$stmt->bind_param('i', $_SESSION['id']);
-$stmt->execute();
-$stmt->bind_result($password, $email);
-$stmt->fetch();
-$stmt->close();
+
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -33,29 +30,58 @@ $stmt->close();
 
 	</head>
 	<body>
-	
+
 	<?php include('navbar.php');?>
 
+		<div class="container-main d-flex justify-content-center p-5" >
+		<div class="container container-table mb-5 pb-5 px-5 pt-4">
+			<h2 class="mt-4 mb-5 text-center">Cantidad de Aprobados por Departamento</h2>
 	
-		<div class="content">
-			<h2>Profile Page</h2>
-			<div>
-				<p>Your account details are below:</p>
-				<table>
-					<tr>
-						<td>Username:</td>
-						<td><?=$_SESSION['name']?></td>
-					</tr>
-					<tr>
-						<td>Password:</td>
-						<td><?=$password?></td>
-					</tr>
-					<tr>
-						<td>Email:</td>
-						<td><?=$email?></td>
-					</tr>
-				</table>
-			</div>
+</table>
+	
+<?php
+
+$sql = "SELECT residencia, COUNT(*) cant FROM identificador i, notas n WHERE i.ci = n.ci AND n.nota>50 GROUP BY i.residencia";
+$result = $con->query($sql);
+
+if ($result->num_rows > 0) {
+
+  while($row = $result->fetch_assoc()) {
+	  if($row["residencia"]==1){
+		@$res .= '<td> LA PAZ</td>';
+	  }
+	  if($row["residencia"]==2){
+		@$res .= '<td>COCHABAMBA</td>';
+	  }
+	  if($row["residencia"]==3){
+		@$res .= '<td> SANTA CRUZ</td>';
+	  }
+	  @$cant .= '<td>'.$row["cant"].'</td>';
+
+  }
+} else {
+  echo "0 results";
+}
+
+echo '
+    <table class="table table-condensed table-bordered neutralize">     
+        <tbody>
+            <tr class="table-primary">
+                <td><b>DEPARTAMENTO</td>'.$res .'
+            </tr>
+            <tr class="table-secondary">
+                <td><b>N° APROBADOS</td>'.$cant .'
+            </tr>
+        </tbody>
+    </table>
+';
+$con->close();
+?>
+
+
 		</div>
+		
+		</div>
+		<?php include('footer.php');?>
 	</body>
 </html>
