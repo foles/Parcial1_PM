@@ -11,12 +11,10 @@ if (mysqli_connect_errno()) {
 if (isset($_POST["ci"]))
 {
     $ci = $_POST['ci'];
-    echo "$ci";
 
 } 
 if (isset($_POST["color"])){
     $color = $_POST['color'];
-    echo "$color";
 
 }
 $sql = "UPDATE identificador SET color='$color' WHERE ci = $ci  ";
@@ -24,11 +22,10 @@ $sql = "UPDATE identificador SET color='$color' WHERE ci = $ci  ";
 
 if ($con->query($sql) === TRUE) {
 
-    header('Location: profile.php');
-} else {
-  echo "Error updating record: " . $con->error;
+    echo("<script>location.href = './profile.php';</script>");
 
-}
+
+} 
 $con->close();
 
 ?>
