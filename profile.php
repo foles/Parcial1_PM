@@ -14,12 +14,9 @@ $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_
 if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
-// We don't have the password or email info stored in sessions so instead we can get the results from the database.
-$stmt = $con->prepare('SELECT password, ci FROM usuario WHERE id = ?');
-// In this case we can use the account ID to get the account info.
-$stmt->bind_param('i', $_SESSION['id']);
+$stmt = $con->prepare('SELECT i.ci, i.nombre_completo, i.fecha_nac, i.residencia, i.color, i.foto FROM usuario u, identificador i WHERE u.id = ? AND u.ci = i.ci');$stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
-$stmt->bind_result($password, $email);
+$stmt->bind_result($ci, $nombre, $fecha, $residencia, $color, $foto);
 $stmt->fetch();
 $stmt->close();
 ?>
@@ -28,37 +25,89 @@ $stmt->close();
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Profile Page</title>
+		<title>Main Page</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
 	</head>
-	<body class="loggedin">
-		<nav class="navtop">
-			<div>
-				<h1>Website Title</h1>
-				<a href="profile.php"><i class="fas fa-user-circle"></i>Profile</a>
-				<a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
+	<body>
+	
+	<?php include('navbar.php');?>
+
+		<div class="container-main d-flex justify-content-center p-5" style="background-color: <?=$color?>">
+
+			<div class="card my-3" style="max-width: 840px;">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+				<img src="<?=$foto?>" class="card-img" alt="...">
+				</div>
+				<div class="col-md-8">
+				<div class="card-body">
+					<h3 class="card-title text-center"> ¡ BIENVENIDO ! </h3>
+			<div class="py-4">
+			<form class="form-inline" action="updateColor.php" method="post">
+			<dl class="row">
+				<dt class="col-sm-6 text-right">USUARIO</dt>
+				<dd class="col-sm-6"><?=$ci?></dd>
+
+				<dt class="col-sm-6 text-right">NOMBRE</dt>
+				<dd class="col-sm-6"> <?=$nombre?> </dd>
+
+				<dt class="col-sm-6 text-right">C.I.</dt>
+				<dd class="col-sm-6" ><?=$ci?></dd>
+
+				<dt class="col-sm-6 text-right">FECHA DE NACIMIENTO </dt>
+				<dd class="col-sm-6"><?=$fecha?></dd>
+
+				<dt class="col-sm-6 text-right">LUGAR RESIDENCIA</dt>
+				
+				<?php
+				if ($residencia == 1) {
+					print("<dd class=\"col-sm-6\">La Paz</dd>");
+				}
+				if ($residencia == 2) {
+					print("<dd class=\"col-sm-6\">Cochabamba</dd>");
+				}
+				if ($residencia == 3) {
+					print("<dd class=\"col-sm-6\">Santa Cruz</dd>");
+				}
+				?>	
+				
+				<dt class="col-sm-6 text-right">USUARIO</dt>
+				<dd class="col-sm-6" ><input type="text" value="<?=$ci?>" name="ci" readonly ></dd>
+				
+				<dt class="col-sm-6 text-right">BACKGROUND COLOR</dt>
+				<dd class="col-sm-6">
+				
+				<select class="custom-select my-1 mr-sm-2" name="color" id="inlineFormCustomSelectPref">
+					<option selected>NINGUNO</option>
+					<option value="rgba(204, 99, 0, 0.7)" style="background: #ff6702; color: #fff;">Naranja</option>
+					<option value="rgba(8, 44, 102, 0.7)" style="background: #0012b4; color: #fff;">Azul</option>
+					<option value="rgba(8, 102, 20, 0.7)" style="background: #007737; color: #fff;">Verde</option>
+				</select>
+
+
+				<button type="submit" class="btn btn-primary my-1">GUARDAR</button>
+				</form>
+				</dd>
+
+				
+			</dl>
+						
+				</div>
+				
+				</div>
 			</div>
-		</nav>
-		<div class="content">
-			<h2>Profile Page</h2>
-			<div>
-				<p>Your account details are below:</p>
-				<table>
-					<tr>
-						<td>Username:</td>
-						<td><?=$_SESSION['name']?></td>
-					</tr>
-					<tr>
-						<td>Password:</td>
-						<td><?=$password?></td>
-					</tr>
-					<tr>
-						<td>Email:</td>
-						<td><?=$email?></td>
-					</tr>
-				</table>
+			</div>
+
+		
 			</div>
 		</div>
+		<?php include('footer.php');?>
+
 	</body>
 </html>
