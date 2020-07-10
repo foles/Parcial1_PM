@@ -1,6 +1,6 @@
 body {
     background-image: url('https://blog.hubspot.es/hubfs/como-hacer-una-pagina-web-en-html.jpg');
-    background-size: 100%;
+    background-size: cover;
 }
 
 .container-login {
@@ -17,7 +17,7 @@ body {
 
 .container-table {
     background-color: white;
-    height: 400px;
+    height: 500px;
 }
 
 .login {

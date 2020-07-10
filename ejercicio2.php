@@ -20,6 +20,8 @@ if (mysqli_connect_errno()) {
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 		<title> Ejercicio 2</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -33,11 +35,10 @@ if (mysqli_connect_errno()) {
 
 	<?php include('navbar.php');?>
 
-		<div class="container-main d-flex justify-content-center p-5" >
-		<div class="container container-table mb-5 pb-5 px-5 pt-4">
+		<div class="container-main d-flex justify-content-center p-3" >
+		<div class="container container-table mb-5 pb-2 px-3 pt-4">
 			<h2 class="mt-4 mb-5 text-center">Cantidad de Aprobados por Departamento</h2>
 	
-</table>
 	
 <?php
 
@@ -64,7 +65,7 @@ if ($result->num_rows > 0) {
 }
 
 echo '
-    <table class="table table-condensed table-bordered neutralize">     
+    <table class="table table-condensed table-bordered table-responsive neutralize">     
         <tbody>
             <tr class="table-primary">
                 <td><b>DEPARTAMENTO</td>'.$res .'

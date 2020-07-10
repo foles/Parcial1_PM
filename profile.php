@@ -25,6 +25,8 @@ $stmt->close();
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 		<title>Main Page</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -38,9 +40,9 @@ $stmt->close();
 	
 	<?php include('navbar.php');?>
 
-		<div class="container-main d-flex justify-content-center p-5" style="background-color: <?=$color?>">
+		<div class="container-main d-flex justify-content-center p-3" style="background-color: <?=$color?>">
 
-			<div class="card my-3" style="max-width: 840px;">
+			<div class="card my-3 mb-5" style="max-width: 840px;">
 			<div class="row no-gutters">
 				<div class="col-md-4">
 				<img src="<?=$foto?>" class="card-img" alt="...">
@@ -51,36 +53,36 @@ $stmt->close();
 			<div class="py-4">
 			<form class="form-inline" action="updateColor.php" method="post">
 			<dl class="row">
-				<dt class="col-sm-6 text-right">USUARIO</dt>
-				<dd class="col-sm-6"><?=$ci?></dd>
+				<dt class="col-sm-6 text-center">USUARIO</dt>
+				<dd class="col-sm-6 text-center"><?=$ci?></dd>
 
-				<dt class="col-sm-6 text-right">NOMBRE</dt>
-				<dd class="col-sm-6"> <?=$nombre?> </dd>
+				<dt class="col-sm-6 text-center">NOMBRE</dt>
+				<dd class="col-sm-6 text-center"> <?=$nombre?> </dd>
 
-				<dt class="col-sm-6 text-right">C.I.</dt>
-				<dd class="col-sm-6" ><?=$ci?></dd>
+				<dt class="col-sm-6 text-center">C.I.</dt>
+				<dd class="col-sm-6 text-center" ><?=$ci?></dd>
 
-				<dt class="col-sm-6 text-right">FECHA DE NACIMIENTO </dt>
-				<dd class="col-sm-6"><?=$fecha?></dd>
+				<dt class="col-sm-6 text-center">FECHA DE NACIMIENTO </dt>
+				<dd class="col-sm-6 text-center"><?=$fecha?></dd>
 
-				<dt class="col-sm-6 text-right">LUGAR RESIDENCIA</dt>
+				<dt class="col-sm-6 text-center">LUGAR RESIDENCIA</dt>
 				
 				<?php
 				if ($residencia == 1) {
-					print("<dd class=\"col-sm-6\">La Paz</dd>");
+					print("<dd class=\"col-sm-6 text-center\">La Paz</dd>");
 				}
 				if ($residencia == 2) {
-					print("<dd class=\"col-sm-6\">Cochabamba</dd>");
+					print("<dd class=\"col-sm-6 text-center\">Cochabamba</dd>");
 				}
 				if ($residencia == 3) {
-					print("<dd class=\"col-sm-6\">Santa Cruz</dd>");
+					print("<dd class=\"col-sm-6 text-center\">Santa Cruz</dd>");
 				}
 				?>	
 				
-				<dt class="col-sm-6 text-right">USUARIO</dt>
-				<dd class="col-sm-6" ><input type="text" value="<?=$ci?>" name="ci" readonly ></dd>
+				<dt class="col-sm-6 text-center">USUARIO</dt>
+				<dd class="col-sm-6 text-center" ><input type="text"  class="text-center"value="<?=$ci?>" name="ci" readonly ></dd>
 				
-				<dt class="col-sm-6 text-right">BACKGROUND COLOR</dt>
+				<dt class="col-sm-6 text-center">BACKGROUND COLOR</dt>
 				<dd class="col-sm-6">
 				
 				<select class="custom-select my-1 mr-sm-2" name="color" id="inlineFormCustomSelectPref">
